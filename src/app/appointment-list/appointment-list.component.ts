@@ -14,7 +14,6 @@ export class AppointmentListComponent implements OnInit {
   newAppointmentDate: Date = new Date();
   newAppointmentTime: Date = new Date();
   appointmentArray: Appointment[] = [];
-
   isDone: boolean = false;
 
   ngOnInit(): void {
@@ -23,6 +22,17 @@ export class AppointmentListComponent implements OnInit {
     this.appointmentArray = savedAppointments
       ? JSON.parse(savedAppointments)
       : [];
+    this.sortAppointment(this.appointmentArray);
+  }
+  alertTest() {
+    alert('HAI CLICCATO 2 VOLTE');
+  }
+  sortAppointment(appointmentArray: Appointment[]) {
+    appointmentArray.sort((a, b) => {
+      const dateA = new Date(a.date).getTime();
+      const dateB = new Date(b.date).getTime();
+      return dateA - dateB;
+    });
   }
 
   addAppointment() {
@@ -38,7 +48,7 @@ export class AppointmentListComponent implements OnInit {
       this.newAppointmentTitle = '';
       this.newAppointmentDate = new Date();
       this.newAppointmentTime = new Date();
-
+      this.sortAppointment(this.appointmentArray);
       localStorage.setItem(
         'appointments',
         JSON.stringify(this.appointmentArray)
@@ -59,6 +69,7 @@ export class AppointmentListComponent implements OnInit {
     */
 
     this.appointmentArray.splice(index, 1);
+    this.sortAppointment(this.appointmentArray);
     localStorage.setItem('appointments', JSON.stringify(this.appointmentArray));
   }
 
@@ -70,8 +81,8 @@ export class AppointmentListComponent implements OnInit {
     //cambio done in true or false
 
     let idAppointmentToUpdate: string = this.appointmentArray[index].id;
-    console.log('idAppointmentToUpdate: ' + idAppointmentToUpdate);
 
+    //recupera l'array salvato nello storage
     let savedAppointmentsString = localStorage.getItem('appointments');
     let savedAppointments = savedAppointmentsString
       ? JSON.parse(savedAppointmentsString)
@@ -83,6 +94,7 @@ export class AppointmentListComponent implements OnInit {
           // Cambia il valore di done in true o false
           savedAppointments[i].done = !savedAppointments[i].done;
 
+          this.sortAppointment(savedAppointments);
           // Aggiorna la lista di appuntamenti salvati nel localStorage
           localStorage.setItem(
             'appointments',

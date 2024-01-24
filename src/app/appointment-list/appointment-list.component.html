@@ -1,12 +1,6 @@
 <div class="container text-center">
   <h1 class="text-2xl font-bold p-2">My todo list</h1>
-  <div class="flex flex-row justify-start items-center">
-    <button
-      (click)="addAppointment()"
-      class="border p-1 m-1 bg-slate-600 w-9 h-9 text-white hover:bg-slate-900"
-    >
-      <i class="fas fa-plus"></i>
-    </button>
+  <div class="flex flex-row justify-between items-center">
     <input
       [(ngModel)]="newAppointmentTitle"
       class="border border-slate-700 m-1 p-1"
@@ -24,7 +18,15 @@
       class="border m-1 p-1"
       type="time"
     />
+    <button
+      (click)="addAppointment()"
+      class="border p-1 m-1 bg-slate-600 w-9 h-9 text-white hover:bg-slate-900"
+    >
+      <i class="fas fa-plus"></i>
+    </button>
   </div>
+
+  <!-- inizio della lista-->
 
   <div class="mt-5">
     <ul>
@@ -32,22 +34,33 @@
         <div
           class="border-b-2 border-slate-400 mb-1 p-2 flex flex-row justify-between items-center"
         >
-          <div class="mb-1 p-2 flex flex-row justify-start items-center">
+          <div
+            class="mb-1 p-2 flex flex-row justify-start items-center"
+            [class.line-through]="p.done"
+            [class.opacity-50]="p.done"
+          >
             <input
               type="checkbox"
               [(ngModel)]="p.done"
               class="mr-2 h-6 w-6"
               (change)="updateAppointment(i)"
             />
-            <p class="px-2">{{ p.date | date : "dd.MM.yyyy" }}</p>
+            <p (dblclick)="alertTest()">
+              {{ p.title }}
+            </p>
 
-            <p class="px-2">{{ p.time | date : "HH:mm" }}</p>
-            <p>{{ p.title }}</p>
+            <p class="px-2 text-xs">
+              {{ p.date | date : "dd.MM.yyyy" }}
+            </p>
+
+            <p class="px-2 text-xs">
+              {{ p.time | date : "HH:mm" }}
+            </p>
           </div>
 
           <button
             (click)="removeAppointment(i)"
-            class="p-2 w-9 h-9 hover:bg-black hover:text-stone-50"
+            class="p-2 w-9 h-9 hover:text-blue-500"
           >
             <i class="fas fa-trash-alt"></i>
           </button>
