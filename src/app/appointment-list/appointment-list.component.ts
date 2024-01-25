@@ -12,7 +12,6 @@ import { v4 as uuidv4 } from 'uuid';
 export class AppointmentListComponent implements OnInit {
   newAppointmentTitle: string = '';
   newAppointmentDate: Date = new Date();
-  newAppointmentTime: Date = new Date();
   appointmentArray: Appointment[] = [];
   isDone: boolean = false;
 
@@ -41,13 +40,11 @@ export class AppointmentListComponent implements OnInit {
         id: uuidv4(),
         title: this.newAppointmentTitle,
         date: this.newAppointmentDate,
-        time: this.newAppointmentTime,
         done: this.isDone,
       };
       this.appointmentArray.push(newAppointment);
       this.newAppointmentTitle = '';
       this.newAppointmentDate = new Date();
-      this.newAppointmentTime = new Date();
       this.sortAppointment(this.appointmentArray);
       localStorage.setItem(
         'appointments',
@@ -73,6 +70,7 @@ export class AppointmentListComponent implements OnInit {
     localStorage.setItem('appointments', JSON.stringify(this.appointmentArray));
   }
 
+  //Se appuntamneto is done
   updateAppointment(index: number) {
     // ho index dell'appointment id cliccato
     // ricavo appointment id che hai checckato
